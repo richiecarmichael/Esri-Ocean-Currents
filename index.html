@@ -1,0 +1,204 @@
+﻿<!DOCTYPE html>
+<html xmlns='http://www.w3.org/1999/xhtml'>
+<head>
+    <title>Ocean Currents</title>
+    <meta http-equiv='content-type' content='text/html;charset=utf-8' />
+    <meta name='author' content='Esri' />
+    <meta name='keywords' content='ocean currents webgl global weather animation esri' />
+    <meta name='description' content='An animated experiment to view the ocean&#39;s currents.' />
+    <meta name='robots' content='index,follow' />
+
+    <meta name='twitter:card' value='summary' />
+    <meta name='twitter:title' content='Ocean Currents' />
+    <meta name='twitter:site' content='@kiwirichie' />
+    <meta name='twitter:creator' content='@kiwirichie' />
+    <meta name='twitter:description' content='An animated experiment to view the ocean&#39;s currents.' />
+
+    <meta property='og:title' content='Ocean Currents' />
+    <meta property='og:description' content='An animated experiment to view the ocean&#39;s currents.' />
+    <meta property='og:type' content='website' />
+    <meta property='og:url' content='//maps.esri.com/rc/ocean/index.html' />
+    <meta property='og:image' content='//maps.esri.com/rc/ocean/img/ocean.jpg' />
+
+    <meta name='apple-mobile-web-app-capable' content='yes' />
+    <meta name='apple-touch-fullscreen' content='yes' />
+    <link rel='apple-touch-icon' href='/img/apple-touch-icon.png' />
+    <meta name='viewport' content='width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no' />
+
+    <link type='image/ico' rel='shortcut icon' href='img/favicon.ico' />
+    <link type='image/ico' rel='icon' href='img/favicon.ico' />
+
+    <link type='text/css' rel='stylesheet' href='//fast.fonts.com/cssapi/23855eec-5fdf-4594-9898-0113a04bfef0.css' />
+    <link type='text/css' rel='stylesheet' href='css/bootstrap.min.css' />
+    <link type='text/css' rel='stylesheet' href='//js.arcgis.com/4.0/esri/css/main.css' />
+    <link type='text/css' rel='stylesheet' href='index.css' />
+
+    <script type='text/javascript' src='js/jquery-2.2.3.min.js'></script>
+    <script type='text/javascript' src='js/bootstrap.min.js'></script>
+    <script type='text/javascript' src='js/three.min.js'></script>
+    <script type='text/javascript' src='js/stats.min.js'></script>
+    <script type='text/javascript' src='//js.arcgis.com/4.0/'></script>
+    <script type='text/javascript' src='index.js'></script>
+    <script>
+        (function (i, s, o, g, r, a, m) {
+            i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                (i[r].q = i[r].q || []).push(arguments)
+            }, i[r].l = 1 * new Date(); a = s.createElement(o),
+            m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+        })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+        ga('create', 'UA-10866840-30', 'auto');
+        ga('send', 'pageview');
+    </script>
+</head>
+<body>
+    <nav class='navbar navbar-default navbar-fixed-top'>
+        <div class='container-fluid'>
+            <div class='navbar-header'>
+                <button type='button' class='navbar-toggle collapsed' data-toggle='collapse' data-target='#navbar' aria-expanded='false'>
+                    <span class='sr-only'>Toggle navigation</span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                    <span class='icon-bar'></span>
+                </button>
+                <a class='navbar-brand' href='https://www.esri.com' target='_blank'>
+                    <img alt='Brand' src='img/esri-logo.png' height='40' />
+                </a>
+                <div id='title'>Ocean Currents</div>
+            </div>
+            <div class='collapse navbar-collapse' id='navbar'>
+                <ul class='nav navbar-nav navbar-right'>
+                    <li class='dropdown'>
+                        <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>
+                            <div class='rc-item'>
+                                <div class='rc-itemTitle'>Season</div>
+                                <div class='rc-itemValue'></div>
+                            </div>
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu rc-season'>
+                            <li class='active'>
+                                <a href='#'>Summer</a>
+                            </li>
+                            <li>
+                                <a href='#'>Fall</a>
+                            </li>
+                            <li>
+                                <a href='#'>Winter</a>
+                            </li>
+                            <li>
+                                <a href='#'>Spring</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class='dropdown'>
+                        <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>
+                            <div class='rc-item'>
+                                <div class='rc-itemTitle'>Style</div>
+                                <div class='rc-itemValue'></div>
+                            </div>
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu rc-type'>
+                            <li class='active'>
+                                <a href='#'>Arrows</a>
+                            </li>
+                            <li>
+                                <a href='#'>Lines</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class='dropdown'>
+                        <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>
+                            <div class='rc-item'>
+                                <div class='rc-itemTitle'>Number</div>
+                                <div class='rc-itemValue'></div>
+                            </div>
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu rc-count'>
+                            <li>
+                                <a href='#'>50</a>
+                            </li>
+                            <li>
+                                <a href='#'>100</a>
+                            </li>
+                            <li>
+                                <a href='#'>200</a>
+                            </li>
+                            <li class='active'>
+                                <a href='#'>500</a>
+                            </li>
+                            <li>
+                                <a href='#'>1000</a>
+                            </li>
+                            <!--<li>
+                                <a href='#'>5000</a>
+                            </li>
+                            <li>
+                                <a href='#'>10000</a>
+                            </li>-->
+                        </ul>
+                    </li>
+                    <li class='dropdown'>
+                        <a href='#' class='dropdown-toggle' data-toggle='dropdown' role='button' aria-haspopup='true' aria-expanded='false'>
+                            <div class='rc-item'>
+                                <div class='rc-itemTitle'>Path Length</div>
+                                <div class='rc-itemValue'></div>
+                            </div>
+                            <span class='caret'></span>
+                        </a>
+                        <ul class='dropdown-menu rc-length'>
+                            <li>
+                                <a href='#'>10</a>
+                            </li>
+                            <li class='active'>
+                                <a href='#'>20</a>
+                            </li>
+                            <li>
+                                <a href='#'>50</a>
+                            </li>
+                            <!--<li>
+                                <a href='#'>100</a>
+                            </li>-->
+                        </ul>
+                    </li>
+                    <li>
+                        <a id='buttonAbout' href='#'>About</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div id='map'></div>
+    <div id='stats'></div>
+    <div id='modalAbout' class='modal fade' tabindex='-1' role='dialog' aria-labelledby='label2'>
+        <div class='modal-dialog' role='document'>
+            <div class='modal-content'>
+                <div class='modal-header'>
+                    <button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+                    <h4 class='modal-title' id='label2'>About this app</h4>
+                </div>
+                <div class='modal-body'>
+                    <p>This application was designed and developed by <a href='http://www.esri.com'>Esri</a>'s <a href='http://blogs.esri.com/esri/apl/'>Applications Prototype Lab</a> in Redlands, California. The application was built using the following technologies:</p>
+                    <ul style='margin-left: -20px;'>
+                        <li><a href='http://developers.arcgis.com/javascript/'>ArcGIS API for JavaScript</a> by <a href='http://www.esri.com'>Esri</a></li>
+                        <li><a href='http://getbootstrap.com/'>Bootstrap</a> by <a href='https://twitter.com/'>Twitter Inc.</a></li>
+                        <li><a href='http://d3js.org/'>D3.js</a> by <a href='http://bost.ocks.org/mike/'>Mike Bostock</a></li>
+                        <li><a href='http://jquery.com/'>jQuery</a> by the jQuery Foundation Inc.</li>
+                        <li><a href='http://threejs.org/'>three.js</a> by <a href='https://twitter.com/mrdoob'>Ricardo Cabello</a> (aka <a href='https://github.com/mrdoob'>Mr.doob</a>)</li>
+                    </ul>
+                    <p>
+                        The surface currents data are from the <a href='http://www.uscg.mil/'>U.S. Coast Guard</a>'s Mariano Global Surface Velocity Analysis (MGSVA) Project directed by the <a href='http://www.rsmas.miami.edu'>Rosenstiel School of Marine and Atmospheric Science</a> at the <a href='http://welcome.miami.edu/'>University of Miami</a>, Florida. The temporal resolution of the surface current data is monthly while the horizontal resolution is one degree longitude and latitude.
+                    </p>
+                    <p>
+                        The data was acquired by tracking the movement of several hundred drifting buoys using a satellite. Most of the drifters were equipped with devices to compensate for wind and wave action. These devices were large holey-sock drogues, centered at a depth of 15 m. Ocean currents were estimated by taking the temporal difference of nearby drifter positions. The drifters transmit sensor data to satellites which determine the buoy’s position and relay data to ground stations for processing and distribution. More information about the drifting buoys and the entire Global Ocean Current Velocity Project is described <a href='http://oceancurrents.rsmas.miami.edu/index.html'>here</a>.
+                    </p>
+                    <p>
+                        The downloadable data is available <a href='http://oceancurrents.rsmas.miami.edu/data.html'>here</a> in ASCII tabular text form with fields representing the geographic coordinates, current velocity, and the x (east-west) and y (north-south) vector components of current directions. Azimuthal directions ranging from 0° to 360° have been calculated locally and a raster of these ocean current directions has been created.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
